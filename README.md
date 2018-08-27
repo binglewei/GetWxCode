@@ -1,2 +1,21 @@
-# GetWxCode
-使用vue-cli 3 来获取微信小程序二维码
+# getweixincode
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
