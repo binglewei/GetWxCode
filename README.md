@@ -1,5 +1,7 @@
 # getweixincode
 
+#### 获取微信小程序页面二维码
+
 ## Project setup
 ```
 npm install
@@ -19,3 +21,9 @@ npm run build
 ```
 npm run lint
 ```
+、
+### 展示效果
+
+![Alt text]('/images/show.png')
+
+![Alt text]('/images/show2.png')
