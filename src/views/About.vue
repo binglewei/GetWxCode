@@ -77,7 +77,7 @@ export default {
       let data = await axios({
         method: 'post',
         url: url,
-        responseType: 'blob',
+        responseType: 'blob', // 二进制文件
         data: {
           path: this.ruleForm.url
         }
