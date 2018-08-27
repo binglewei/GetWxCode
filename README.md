@@ -21,7 +21,7 @@ npm run build
 ```
 npm run lint
 ```
-、
+
 ### 展示效果
 
 ![Alt text](images/show.png)
