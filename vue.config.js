@@ -1,5 +1,5 @@
 module.exports = {
-  // baseUrl: '/getWxCode/',
+  baseUrl: '/getWxCode/',
   devServer: {
     open: true,
     proxy: {

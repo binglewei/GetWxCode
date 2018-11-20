@@ -72,7 +72,7 @@ export default {
     },
     async getwxacode () {
       console.log(this.access_token)
-      let url = `/wxa/getwxacode?access_token=${this.access_token}`
+      let url = `https://api.weixin.qq.com/wxa/getwxacode?access_token=${this.access_token}`
       // eslint-disable-next-line
       let data = await axios({
         method: 'post',

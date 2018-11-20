@@ -82,7 +82,7 @@ export default {
       this.$refs[formName].resetFields()
     },
     async getAsstoken () {
-      let url = `/cgi-bin/token?grant_type=${this.ruleForm.grantType}&appid=${this.ruleForm.appid}&secret=${this.ruleForm.secret}`
+      let url = `https://api.weixin.qq.com/cgi-bin/token?grant_type=${this.ruleForm.grantType}&appid=${this.ruleForm.appid}&secret=${this.ruleForm.secret}`
       // eslint-disable-next-line
       let data = await axios({
         method: 'get',
