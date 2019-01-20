@@ -25,5 +25,7 @@ npm run lint
 ### 展示效果
 
 ![Alt text](images/show.png)
-
 ![Alt text](images/show2.png)
+![Alt text](images/show3.png)
+![Alt text](images/show4.png)
+![Alt text](images/show5.png)

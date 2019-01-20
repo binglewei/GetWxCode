@@ -1,28 +1,32 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="LALALA"/>
-    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm formBox">
-      <el-form-item label="grant_type">
-        <el-input type="text" v-model="ruleForm.grantType" :disabled="true" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="appid" prop="appid">
-        <el-input type="text" v-model="ruleForm.appid" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="secret" prop="secret">
-        <el-input type="text" v-model="ruleForm.secret" auto-complete="off"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">获取asstoken</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
-      </el-form-item>
-    </el-form>
-  </div>
+  <el-container>
+    <el-header height="auto">
+      <HelloWorld msg="获取微信小程序二维码"/>
+      <img alt="Vue logo" class="wxPic" src="../assets/images/timg.png">
+    </el-header>
+    <el-main>
+      <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm formBox">
+        <el-form-item label="grant_type">
+          <el-input type="text" v-model="ruleForm.grantType" :disabled="true" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="appid" prop="appid">
+          <el-input type="text" v-model="ruleForm.appid" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="secret" prop="secret">
+          <el-input type="text" v-model="ruleForm.secret" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleForm')">获取asstoken</el-button>
+          <el-button @click="resetForm('ruleForm')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </el-main>
+  </el-container>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { mapState } from 'vuex'
+import HelloWorld from '../components/HelloWorld.vue'
 
 export default {
   name: 'home',
@@ -67,22 +71,42 @@ export default {
   components: {
     HelloWorld
   },
+  created () {
+    this.ruleForm.appid = this.accessParams.appId
+    this.ruleForm.secret = this.accessParams.secret
+  },
+  watch: {
+    'accessParams': {
+      handler (val) {
+        console.log(val)
+      },
+      deep: true
+    }
+  },
+  computed: {
+    ...mapState(['accessParams'])
+  },
   methods: {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.getAsstoken()
         } else {
-          this.$message.error('请输入Appid和Secret！！！')
+          this.$message.error('请输入Appid和Secret!')
           return false
         }
       })
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
+      this.ruleForm = {
+        grantType: 'client_credential',
+        appid: '',
+        secret: ''
+      }
     },
     async getAsstoken () {
-      let url = `https://api.weixin.qq.com/cgi-bin/token?grant_type=${this.ruleForm.grantType}&appid=${this.ruleForm.appid}&secret=${this.ruleForm.secret}`
+      let url = `/cgi-bin/token?grant_type=${this.ruleForm.grantType}&appid=${this.ruleForm.appid}&secret=${this.ruleForm.secret}`
       // eslint-disable-next-line
       let data = await axios({
         method: 'get',
@@ -91,9 +115,16 @@ export default {
       console.log('data', data)
       if (data.status === 200 && !!data.data.access_token) {
         this.$store.commit('setAccess', data.data.access_token)
+        this.$store.commit('setAccessParams', {
+          appId: this.ruleForm.appid,
+          secret: this.ruleForm.secret
+        })
         this.$message({
           message: '获取access_token成功',
-          type: 'success'
+          type: 'success',
+          onClose: () => {
+            this.$router.push('get')
+          }
         })
       } else {
         this.$message.error('获取access_token出错')
@@ -107,5 +138,9 @@ export default {
 .formBox {
   width: 500px;
   margin: 0 auto;
+}
+.wxPic {
+  width: 200px;
+  height: 200px;
 }
 </style>

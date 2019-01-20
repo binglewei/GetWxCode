@@ -1,19 +1,20 @@
 <template>
   <div id="app">
-    <HelloWorld msg="LALALA"/>
-    <router-link to="/">获取accessToken</router-link> |
-    <router-link to="/about">获取无限制小程序码</router-link>
     <router-view/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld
+  watch: {
+    '$route': 'routerFun'
+  },
+  methods: {
+    routerFun (to, from) {
+      console.log('routerFun', to, from)
+    }
   }
 }
 </script>
@@ -26,5 +27,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+body {
+  min-width: 1200px;
+  margin: 0;
+  padding: 0;
 }
 </style>
